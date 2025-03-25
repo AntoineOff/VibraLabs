@@ -16,12 +16,22 @@
         header {
             background: black;
             padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            transition: background 0.5s ease-in-out;
+            z-index: 1000;
         }
         nav a {
             color: white;
             margin: 0 15px;
             text-decoration: none;
             font-size: 18px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffcc00;
         }
         .hero {
             background: url('bike-hero.jpg') center/cover no-repeat;
@@ -31,14 +41,37 @@
             justify-content: center;
             font-size: 36px;
             font-weight: bold;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-in-out forwards;
         }
         .section {
             padding: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .footer {
             background: black;
             padding: 20px;
             margin-top: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -74,5 +107,19 @@
     <div class="footer">
         &copy; 2025 Luxury Bikes. Tous droits réservés.
     </div>
+    <script>
+        document.addEventListener("scroll", function() {
+            const sections = document.querySelectorAll(".section");
+            const footer = document.querySelector(".footer");
+            sections.forEach(section => {
+                if (section.getBoundingClientRect().top < window.innerHeight - 100) {
+                    section.classList.add("visible");
+                }
+            });
+            if (footer.getBoundingClientRect().top < window.innerHeight - 100) {
+                footer.classList.add("visible");
+            }
+        });
+    </script>
 </body>
 </html>
